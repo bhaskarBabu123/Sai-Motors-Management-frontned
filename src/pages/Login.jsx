@@ -4,7 +4,7 @@ import { Eye, EyeOff, Lock, Mail, RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useApp } from '../context/AppContext';
 import toast from 'react-hot-toast';
-
+import logo from '../components/sai_motors_logo.jpeg'
 const Login = () => {
   const { login } = useAuth();
   const { theme } = useApp();
@@ -52,7 +52,7 @@ const Login = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <img 
-            src="./sai_motors_logo.jpeg" 
+            src={logo}
             alt="Sai Motors" 
             className="w-48 h-auto mx-auto rounded-lg mb-2" 
           />
