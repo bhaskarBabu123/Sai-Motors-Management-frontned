@@ -6,12 +6,14 @@ import {
   Sun, Moon, Bell, User, Plus,  CreditCard,
   Building,
   TrendingDown,
-  TrendingUp
+  TrendingUp,
+  RefreshCcw
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useApp } from '../context/AppContext';
 import { useLocation, Link } from 'react-router-dom';
 import logo from './sai_motors_logo.jpeg'
+import toast from 'react-hot-toast';
 
 const Layout = ({ children }) => {
   const { user, logout } = useAuth();
@@ -19,6 +21,12 @@ const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
+   const handlePageReload = () => {
+      toast('Reloading page...', { duration: 1000 });
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    };
   const navigation = [
     { name: 'DASHBOARD', href: '/', icon: Home },
     { name: 'INVENTORY', href: '/inventory', icon: Package },
@@ -114,25 +122,19 @@ const Layout = ({ children }) => {
             </div>
           </div>
 
-          {/* <div className="flex items-center space-x-6">
-            <div className="hidden sm:flex items-center border-b border-gray-200 py-1">
-                <Search className="w-3.5 h-3.5 text-gray-400 mr-2" />
-                <input 
-                    type="text" 
-                    placeholder="SEARCH..." 
-                    className="bg-transparent border-none text-[10px] tracking-widest focus:ring-0 w-32 outline-none uppercase"
-                />
-            </div>
-            <div className="flex items-center space-x-3">
-               <button className="p-2 text-black hover:bg-gray-100 rounded-full relative">
-                <Bell className="w-4 h-4" />
-              </button>
-              <button className="flex items-center space-x-2 bg-black text-white px-4 py-2 rounded-sm text-[10px] font-bold tracking-widest hover:bg-gray-800 transition-colors">
-                <Plus className="w-3 h-3" />
-                <span>NEW ENTRY</span>
-              </button>
-            </div>
-          </div> */}
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          type="button"
+                          onClick={handlePageReload}
+                          className={` py-2 px-3 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1 ${
+                             theme === 'dark'
+                                ? 'bg-white hover:bg-gray-600 border border-gray-600/50 text-black'
+                                : 'bg-black hover:bg-gray-200 border border-gray-300/50 text-white'
+                          }`}
+                        >
+                          <RefreshCcw className="w-3.5 h-3.5" />
+                        </motion.button>
         </header>
 
         {/* SCROLLABLE AREA */}

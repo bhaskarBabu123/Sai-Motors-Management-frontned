@@ -115,38 +115,37 @@ const SellBike = () => {
     
     setSendingWhatsApp(true);
     try {
-      const baseUrl = window.location.origin;
+      const baseUrl = 'https://sai-motors-management-backend.onrender.com';
       const invoiceUrl = `${baseUrl}/api/sales/invoice/${lastSale.id}`;
       
-      const whatsappMessage = `🎉 *Sai Motors - Sale Invoice*
+      const whatsappMessage = `*Sai Motors - Sale Invoice*
 
-📋 *Invoice:* ${lastSale.invoiceNumber}
-🆔 *Sale ID:* ${lastSale.saleNumber}
+*Invoice:* ${lastSale.invoiceNumber}
+*Sale ID:* ${lastSale.saleNumber}
 
-🚗 *Bike Details:*
+*Bike Details:*
 • Brand/Model: ${lastSale.bike.brand} ${lastSale.bike.model}
 • Reg No: ${lastSale.bike.bikeNumber}
 • Year: ${lastSale.bike.year}
 • Color: ${lastSale.bike.color}
 
-👤 *Customer:*
+*Customer:*
 • Name: ${lastSale.buyerName}
 • Phone: ${lastSale.buyerPhone}
 • Address: ${lastSale.buyerAddress}
 
-💰 *Payment Details:*
+*Payment Details:*
 • Selling Price: ₹${parseFloat(lastSale.sellingPrice).toLocaleString()}
 • Discount: ₹${parseFloat(lastSale.discount).toLocaleString()}
-• *Final Amount: ₹${parseFloat(lastSale.finalAmount).toLocaleString()}*
 • Payment: ${lastSale.paymentMode}
 
-✅ *Status: PAID*
+*Status: PAID*
 
-📄 *Download Invoice:* ${invoiceUrl}
+*Download Invoice:* ${invoiceUrl}
 
-Thank you for choosing Sai Motors! 🏍️✨`;
+Thank you for choosing Sai Motors!`;
 
-      const whatsappUrl = `https://wa.me/${lastSale.buyerPhone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(whatsappMessage)}`;
+      const whatsappUrl = `https://wa.me/+91${lastSale.buyerPhone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(whatsappMessage)}`;
       window.open(whatsappUrl, '_blank');
       
       toast.success('WhatsApp message ready!');
