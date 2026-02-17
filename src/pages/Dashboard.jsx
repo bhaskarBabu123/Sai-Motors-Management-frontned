@@ -53,7 +53,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className={`${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} min-h-screen p-3 sm:p-4 space-y-3`}>
+    <div className={`${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} min-h-screen  space-y-3`}>
       
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center gap-3 pb-2 border-b border-gray-200 dark:border-gray-700">

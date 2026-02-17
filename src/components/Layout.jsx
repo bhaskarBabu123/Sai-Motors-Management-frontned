@@ -110,13 +110,13 @@ const Layout = ({ children }) => {
       <div className="flex-1 flex flex-col min-w-0 h-full bg-[#F9FAFB]">
         
         {/* Header - Sharp White */}
-        <header className="h-16 flex-shrink-0 bg-white border-b border-gray-200 flex items-center justify-between px-8">
+        <header className="h-16 flex-shrink-0 bg-white border-b border-gray-200 flex items-center justify-between px-4">
           <div className="flex items-center">
             <button className="lg:hidden mr-4" onClick={() => setSidebarOpen(true)}>
               <Menu className="h-4 w-4" />
             </button>
             <div className="text-[11px] text-gray-400 font-medium tracking-widest uppercase">
-              Section / <span className="text-black font-bold">
+              Page / <span className="text-black font-bold">
                 {navigation.find(item => item.href === location.pathname)?.name || 'DASHBOARD'}
               </span>
             </div>
@@ -138,7 +138,7 @@ const Layout = ({ children }) => {
         </header>
 
         {/* SCROLLABLE AREA */}
-        <main className="flex-1 overflow-y-auto p-5">
+        <main className="flex-1 overflow-y-auto p-3">
           <div className="max-w-6xl mx-auto">
             {/* Context Header for children */}
             
