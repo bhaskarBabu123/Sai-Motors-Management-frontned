@@ -6,7 +6,7 @@ import {
   Building, 
   User, 
   Phone, 
-  DollarSign, 
+  IndianRupee, 
   Calendar, 
   TrendingUp,
   Eye,

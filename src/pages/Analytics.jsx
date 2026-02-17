@@ -6,7 +6,7 @@ import {
 } from 'recharts';
 import {
   TrendingUp, Calendar, Target, Clock, Award, AlertTriangle, 
-  Users, DollarSign, Activity, BarChart3
+  Users, IndianRupee, Activity, BarChart3
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
@@ -52,7 +52,7 @@ const Analytics = () => {
     {
       value: dashboardData.avgSaleValue ? `₹${Math.round(dashboardData.avgSaleValue)}` : '₹0',
       label: 'Avg Sale',
-      icon: DollarSign,
+      icon: IndianRupee,
       color: '#F59E0B'
     },
     {
@@ -70,7 +70,7 @@ const Analytics = () => {
   ];
 
   return (
-    <div className={`${theme === 'dark' ? 'bg-neutral-900 text-neutral-100' : 'bg-gradient-to-br from-slate-50 to-blue-50 text-neutral-900'} min-h-screen p-3 sm:p-4 lg:p-6 text-xs sm:text-sm space-y-3 sm:space-y-4`}>
+    <div className={`${theme === 'dark' ? 'bg-neutral-900 text-neutral-100' : 'bg-gradient-to-br from-slate-50 to-blue-50 text-neutral-900'} min-h-screen  text-xs sm:text-sm space-y-3 sm:space-y-4`}>
       
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white/90 dark:bg-neutral-900/90 backdrop-blur border-b border-neutral-200/50 dark:border-neutral-800/50 px-3 py-2 sm:px-4 sm:py-3 mb-3 sm:mb-4 rounded-lg">

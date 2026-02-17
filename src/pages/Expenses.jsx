@@ -4,7 +4,7 @@ import {
   Plus, 
   Search, 
   Calendar, 
-  DollarSign, 
+  IndianRupee, 
   Tag, 
   FileText, 
   Edit2, 

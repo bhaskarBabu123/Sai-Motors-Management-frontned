@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import { useAuth } from './AuthContext'; // Import AuthContext
 import toast from 'react-hot-toast';
 
 const AppContext = createContext();
@@ -12,7 +13,39 @@ export const useApp = () => {
   return context;
 };
 
+// Create axios instance with interceptors
+const apiClient = axios.create({
+  baseURL: 'https://sai-motors-management-backend.onrender.com/api',
+  timeout: 10000,
+});
+
+// Request interceptor - add auth token
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor - handle 401 errors
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      toast.error('Session expired. Please login again.');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const AppProvider = ({ children }) => {
+  const { user } = useAuth(); // Get user from AuthContext
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'light';
   });
@@ -24,6 +57,7 @@ export const AppProvider = ({ children }) => {
   const [dashboardData, setDashboardData] = useState({});
   const [loading, setLoading] = useState(false);
 
+  // Apply theme
   useEffect(() => {
     localStorage.setItem('theme', theme);
     if (theme === 'dark') {
@@ -33,68 +67,86 @@ export const AppProvider = ({ children }) => {
     }
   }, [theme]);
 
+  // Initialize data only when user is authenticated
   useEffect(() => {
-    fetchDashboardData();
-  }, [dashboardFilter]);
+    if (user) {
+      fetchDashboardData();
+      fetchBikes({ status: 'available' });
+      fetchCustomers();
+    }
+  }, [user, dashboardFilter]);
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
+    if (!user) return;
     try {
       setLoading(true);
-      const response = await axios.get(`https://sai-motors-management-backend.onrender.com/api/dashboard?filter=${dashboardFilter}`);
+      const response = await apiClient.get(`/dashboard?filter=${dashboardFilter}`);
       setDashboardData(response.data);
     } catch (error) {
       console.error('Dashboard data error:', error);
-      toast.error('Failed to fetch dashboard data');
+      if (error.response?.status !== 401) {
+        toast.error('Failed to fetch dashboard data');
+      }
     } finally {
       setLoading(false);
     }
-  };
+  }, [dashboardFilter, user]);
 
-  const fetchBikes = async (params = {}) => {
+  const fetchBikes = useCallback(async (params = {}) => {
+    if (!user) return { bikes: [] };
     try {
       const queryString = new URLSearchParams(params).toString();
-      const response = await axios.get(`https://sai-motors-management-backend.onrender.com/api/bikes${queryString ? `?${queryString}` : ''}`);
+      const response = await apiClient.get(`/bikes${queryString ? `?${queryString}` : ''}`);
       setBikes(response.data.bikes || response.data);
       return response.data;
     } catch (error) {
       console.error('Fetch bikes error:', error);
-      toast.error('Failed to fetch bikes');
+      if (error.response?.status !== 401) {
+        toast.error('Failed to fetch bikes');
+      }
       return { bikes: [] };
     }
-  };
+  }, [user]);
 
-  const fetchSales = async (params = {}) => {
+  const fetchSales = useCallback(async (params = {}) => {
+    if (!user) return { sales: [] };
     try {
       const queryString = new URLSearchParams(params).toString();
-      const response = await axios.get(`https://sai-motors-management-backend.onrender.com/api/sales${queryString ? `?${queryString}` : ''}`);
+      const response = await apiClient.get(`/sales${queryString ? `?${queryString}` : ''}`);
       setSales(response.data.sales || response.data);
       return response.data;
     } catch (error) {
       console.error('Fetch sales error:', error);
-      toast.error('Failed to fetch sales');
+      if (error.response?.status !== 401) {
+        toast.error('Failed to fetch sales');
+      }
       return { sales: [] };
     }
-  };
+  }, [user]);
 
-  const fetchCustomers = async (params = {}) => {
+  const fetchCustomers = useCallback(async (params = {}) => {
+    if (!user) return { customers: [] };
     try {
       const queryString = new URLSearchParams(params).toString();
-      const response = await axios.get(`https://sai-motors-management-backend.onrender.com/api/customers${queryString ? `?${queryString}` : ''}`);
+      const response = await apiClient.get(`/customers${queryString ? `?${queryString}` : ''}`);
       setCustomers(response.data.customers || response.data);
       return response.data;
     } catch (error) {
       console.error('Fetch customers error:', error);
-      toast.error('Failed to fetch customers');
+      if (error.response?.status !== 401) {
+        toast.error('Failed to fetch customers');
+      }
       return { customers: [] };
     }
-  };
+  }, [user]);
 
   const addBike = async (bikeData) => {
+    if (!user) return { success: false, error: 'Not authenticated' };
     try {
-      const response = await axios.post('https://sai-motors-management-backend.onrender.com/api/bikes', bikeData);
+      const response = await apiClient.post('/bikes', bikeData);
       setBikes(prevBikes => [...prevBikes, response.data]);
       toast.success('Bike added successfully');
-      fetchDashboardData(); // Refresh dashboard
+      fetchDashboardData();
       return { success: true, data: response.data };
     } catch (error) {
       console.error('Add bike error:', error);
@@ -105,13 +157,14 @@ export const AppProvider = ({ children }) => {
   };
 
   const updateBike = async (id, bikeData) => {
+    if (!user) return { success: false, error: 'Not authenticated' };
     try {
-      const response = await axios.put(`https://sai-motors-management-backend.onrender.com/api/bikes/${id}`, bikeData);
+      const response = await apiClient.put(`/bikes/${id}`, bikeData);
       setBikes(prevBikes => 
         prevBikes.map(bike => bike._id === id ? response.data : bike)
       );
       toast.success('Bike updated successfully');
-      fetchDashboardData(); // Refresh dashboard
+      fetchDashboardData();
       return { success: true, data: response.data };
     } catch (error) {
       console.error('Update bike error:', error);
@@ -122,11 +175,12 @@ export const AppProvider = ({ children }) => {
   };
 
   const deleteBike = async (id) => {
+    if (!user) return { success: false, error: 'Not authenticated' };
     try {
-      await axios.delete(`https://sai-motors-management-backend.onrender.com/api/bikes/${id}`);
+      await apiClient.delete(`/bikes/${id}`);
       setBikes(prevBikes => prevBikes.filter(bike => bike._id !== id));
       toast.success('Bike deleted successfully');
-      fetchDashboardData(); // Refresh dashboard
+      fetchDashboardData();
       return { success: true };
     } catch (error) {
       console.error('Delete bike error:', error);
@@ -137,14 +191,12 @@ export const AppProvider = ({ children }) => {
   };
 
   const sellBike = async (saleData) => {
+    if (!user) return { success: false, error: 'Not authenticated' };
     try {
-      const response = await axios.post('https://sai-motors-management-backend.onrender.com/api/sales', saleData);
+      const response = await apiClient.post('/sales', saleData);
       toast.success('Bike sold successfully');
-      
-      // Refresh data
-      fetchBikes();
+      fetchBikes({ status: 'available' });
       fetchDashboardData();
-      
       return { success: true, data: response.data };
     } catch (error) {
       console.error('Sell bike error:', error);
@@ -155,8 +207,9 @@ export const AppProvider = ({ children }) => {
   };
 
   const addCustomer = async (customerData) => {
+    if (!user) return { success: false, error: 'Not authenticated' };
     try {
-      const response = await axios.post('https://sai-motors-management-backend.onrender.com/api/customers', customerData);
+      const response = await apiClient.post('/customers', customerData);
       setCustomers(prevCustomers => [...prevCustomers, response.data]);
       toast.success('Customer added successfully');
       return { success: true, data: response.data };
@@ -169,8 +222,9 @@ export const AppProvider = ({ children }) => {
   };
 
   const updateCustomer = async (id, customerData) => {
+    if (!user) return { success: false, error: 'Not authenticated' };
     try {
-      const response = await axios.put(`https://sai-motors-management-backend.onrender.com/api/customers/${id}`, customerData);
+      const response = await apiClient.put(`/customers/${id}`, customerData);
       setCustomers(prevCustomers =>
         prevCustomers.map(customer => customer._id === id ? response.data : customer)
       );
@@ -185,8 +239,9 @@ export const AppProvider = ({ children }) => {
   };
 
   const deleteCustomer = async (id) => {
+    if (!user) return { success: false, error: 'Not authenticated' };
     try {
-      await axios.delete(`https://sai-motors-management-backend.onrender.com/api/customers/${id}`);
+      await apiClient.delete(`/customers/${id}`);
       setCustomers(prevCustomers => prevCustomers.filter(customer => customer._id !== id));
       toast.success('Customer deleted successfully');
       return { success: true };

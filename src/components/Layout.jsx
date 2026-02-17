@@ -141,15 +141,7 @@ const Layout = ({ children }) => {
         <main className="flex-1 overflow-y-auto p-5">
           <div className="max-w-6xl mx-auto">
             {/* Context Header for children */}
-            <div className="mb-8 flex justify-between items-end border-b border-gray-200 pb-4">
-               <div>
-                  <h3 className="text-xs font-bold tracking-[0.3em] uppercase">Overview</h3>
-                  <p className="text-[10px] text-gray-500 mt-1 uppercase tracking-tighter">Real-time status updates</p>
-               </div>
-               <div className="text-[10px] text-gray-400 font-mono italic">
-                 TIMESTAMP: {new Date().toLocaleTimeString()}
-               </div>
-            </div>
+            
 
             <motion.div
               key={location.pathname}

@@ -4,7 +4,7 @@ import {
   Plus, 
   Search, 
   Calendar, 
-  DollarSign, 
+  IndianRupee, 
   Tag, 
   TrendingUp, 
   Edit2, 
@@ -185,7 +185,7 @@ const Revenue = () => {
             theme === 'dark' ? 'bg-gray-800' : 'bg-white'
           }`}
         >
-          <div className="p-6">
+          <div className="">
             <div className="flex items-center justify-between mb-6">
               <h2 className={`text-xl font-bold ${
                 theme === 'dark' ? 'text-white' : 'text-gray-900'

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FileText, Download, Calendar, Filter, TrendingUp, Users, 
-  Package, DollarSign, BarChart3, PieChart, X, CheckCircle, Loader2
+  Package, IndianRupee, BarChart3, PieChart, X, CheckCircle, Loader2
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import toast from 'react-hot-toast';
@@ -43,7 +43,7 @@ const Reports = () => {
       id: 'profit-analysis',
       name: 'Profit Analysis',
       description: 'Comprehensive profit and loss analysis',
-      icon: DollarSign,
+      icon: IndianRupee,
       color: 'yellow'
     }
   ];
@@ -113,7 +113,7 @@ const Reports = () => {
   };
 
   return (
-    <div className={`${theme === 'dark' ? 'bg-neutral-900 text-neutral-100' : 'bg-gradient-to-br from-slate-50 to-blue-50 text-neutral-900'} min-h-screen text-xs p-3`}>
+    <div className={`${theme === 'dark' ? 'bg-neutral-900 text-neutral-100' : 'bg-gradient-to-br from-slate-50 to-blue-50 text-neutral-900'} min-h-screen text-xs`}>
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white/90 dark:bg-neutral-900/90 backdrop-blur border-b border-neutral-200/50 dark:border-neutral-800/50 px-3 py-3 mb-4">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
@@ -129,7 +129,7 @@ const Reports = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-2">
+      <div className="max-w-7xl mx-auto ">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Report Configuration - Your Original Layout */}
           <div className={`lg:col-span-2 bg-white/70 dark:bg-neutral-800/70 backdrop-blur rounded-2xl border border-neutral-200/50 dark:border-neutral-700/50 p-4 lg:p-6 order-2 lg:order-1`}>

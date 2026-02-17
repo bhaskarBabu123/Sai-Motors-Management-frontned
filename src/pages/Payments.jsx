@@ -9,7 +9,7 @@ import {
   Calendar, 
   User, 
   Package, 
-  DollarSign,
+  IndianRupee,
   Clock,
   CheckCircle,
   AlertTriangle,

@@ -7,8 +7,9 @@ import {
   ScatterChart, Scatter, ZAxis, ReferenceLine
 } from 'recharts';
 import {
-  Activity, BarChart2, PieChart as PieIcon, Users2, Bike, Zap, Star, Gauge, DollarSign, 
-  TrendingUp, AlertTriangle, Target, Calendar, Percent, Clock, Package, ShoppingCart, Filter
+  Activity, BarChart2, PieChart as PieIcon, Users2, Bike, Zap, Star, Gauge, IndianRupee, 
+  TrendingUp, AlertTriangle, Target, Calendar, Percent, Clock, Package, ShoppingCart, Filter,
+  
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
@@ -89,7 +90,7 @@ const Dashboard = () => {
         </div>
         
         <div className={`p-2.5 border rounded-lg flex flex-col items-center text-center ${theme === 'dark' ? 'bg-gray-800 border-gray-700 hover:bg-gray-750' : 'bg-white border-gray-200 hover:bg-gray-50'}`}>
-          <DollarSign className="w-5 h-5 text-emerald-500 mb-1" />
+          <IndianRupee className="w-5 h-5 text-emerald-500 mb-1" />
           <div className="text-xs font-bold text-emerald-500">₹{(dashboardData.totalRevenue || 0)?.toLocaleString()}</div>
           <div className="text-xs opacity-75">Revenue</div>
         </div>
@@ -241,7 +242,7 @@ const Dashboard = () => {
         </div>
         
         <div className={`p-3 border rounded-lg flex items-center gap-2 text-xs ${theme === 'dark' ? 'bg-blue-900/30 border-blue-500/50 hover:bg-blue-900/50' : 'bg-blue-50 border-blue-200 hover:bg-blue-100'}`}>
-          <DollarSign className="w-4 h-4 text-blue-500 flex-shrink-0" />
+          <IndianRupee className="w-4 h-4 text-blue-500 flex-shrink-0" />
           <div>
             <div className="font-bold opacity-90">Avg Sale</div>
             <div className="font-mono">₹{(dashboardData.avgSaleValue || 0)?.toLocaleString()}</div>

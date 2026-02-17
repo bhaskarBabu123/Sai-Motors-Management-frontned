@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Settings as SettingsIcon, User, Bell, Shield, Palette, FileText, Store, 
-  Save, Eye, EyeOff, Phone, Mail, MapPin, DollarSign, Percent, AlertCircle, 
+  Save, Eye, EyeOff, Phone, Mail, MapPin, IndianRupee, Percent, AlertCircle, 
   Clock, Download, AlertTriangle, BarChart3
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -251,7 +251,7 @@ const Settings = () => {
                 </div>
                 <div>
                   <label className={`flex items-center gap-2 text-[11px] font-medium mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                    <DollarSign className="w-3 h-3" /> Invoice Prefix
+                    <IndianRupee className="w-3 h-3" /> Invoice Prefix
                   </label>
                   <input
                     type="text"
@@ -277,7 +277,7 @@ const Settings = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className={`flex items-center gap-2 text-[11px] font-medium mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                    <DollarSign className="w-3 h-3" /> Currency Symbol
+                    <IndianRupee className="w-3 h-3" /> Currency Symbol
                   </label>
                   <input
                     type="text"
@@ -342,7 +342,7 @@ const Settings = () => {
 
               <div>
                 <h4 className={`text-[13px] font-semibold mb-3 flex items-center gap-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  <DollarSign className="w-4 h-4" /> Profit Color Ranges
+                  <IndianRupee className="w-4 h-4" /> Profit Color Ranges
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className={`${theme === 'dark' ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'} p-3 rounded-lg border`}>
@@ -548,7 +548,7 @@ const Settings = () => {
   };
 
   return (
-    <div className={`p-4 sm:p-6 space-y-6 ${theme === 'dark' ? 'bg-gray-900 min-h-screen' : 'bg-gradient-to-br from-gray-50 to-slate-50/50 min-h-screen'}`}>
+    <div className={` space-y-6 ${theme === 'dark' ? 'bg-gray-900 min-h-screen' : 'bg-gradient-to-br from-gray-50 to-slate-50/50 min-h-screen'}`}>
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-2">

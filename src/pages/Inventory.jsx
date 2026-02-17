@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Plus, Search, Filter, Edit2, Trash2, Upload, Download, Eye, AlertTriangle, 
-  ArrowUp, ArrowDown, User, Hash, Tag, Calendar, DollarSign, Palette, Gauge, 
+  ArrowUp, ArrowDown, User, Hash, Tag, Calendar, IndianRupee, Palette, Gauge, 
   Droplets, Activity, FileText, Zap, Star
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -258,7 +258,7 @@ const Inventory = () => {
                 <div>
                   <label className={labelClass}>
                     <div className="flex items-center gap-1 mb-1">
-                      <DollarSign className="w-3 h-3" /> Buy Price *
+                      <IndianRupee className="w-3 h-3" /> Buy Price *
                     </div>
                   </label>
                   <input
@@ -404,7 +404,7 @@ const Inventory = () => {
   };
 
   return (
-    <div className={`p-4 sm:p-6 space-y-4 ${theme === 'dark' ? 'bg-gray-900 min-h-screen' : 'bg-gradient-to-br from-gray-50 to-slate-50 min-h-screen'}`}>
+    <div className={`sm:p-6 space-y-4 ${theme === 'dark' ? 'bg-gray-900 min-h-screen' : 'bg-gradient-to-br from-gray-50 to-slate-50 min-h-screen'}`}>
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
@@ -505,8 +505,8 @@ const Inventory = () => {
                   { field: 'bikeNumber', label: 'Bike No', icon: Hash },
                   { field: 'brand', label: 'Brand/Model', icon: Tag },
                   { field: 'year', label: 'Year', icon: Calendar },
-                  { field: 'buyPrice', label: 'Buy Price', icon: DollarSign },
-                  { field: 'sellPrice', label: 'Sell Price', icon: DollarSign },
+                  { field: 'buyPrice', label: 'Buy Price', icon: IndianRupee },
+                  { field: 'sellPrice', label: 'Sell Price', icon: IndianRupee },
                   { field: 'profit', label: 'Profit', icon: Activity },
                   { field: 'status', label: 'Status', icon: Gauge },
                   { label: 'Actions' }

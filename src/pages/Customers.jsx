@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   User, Users, Search, Plus, Edit2, Trash2, Eye, Phone, Mail, MapPin, 
-  Calendar, DollarSign, ShoppingBag, Filter, ChevronDown, Download,
+  Calendar, IndianRupee, ShoppingBag, Filter, ChevronDown, Download,
   Star, Award, Zap, BarChart3, X, Copy, Printer, MoreHorizontal
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -634,7 +634,7 @@ const CustomerPopupModal = ({
                   {/* STATS */}
                   <div>
                     <h3 className="text-[13px] font-semibold mb-4 flex items-center gap-2 opacity-80">
-                      <DollarSign size={14} />
+                      <IndianRupee size={14} />
                       Purchase Statistics
                     </h3>
                     <div className="grid grid-cols-2 gap-4">
